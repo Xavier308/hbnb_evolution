@@ -43,6 +43,9 @@ class DevelopmentConfig(Config):
         "DATABASE_URL", "sqlite:///hbnb_dev.db")
     DEBUG = True
 
+    #Added this jun25/2024
+    SQLALCHEMY_ECHO = True  # Log all SQL queries (helpful for debugging)
+
 
 class TestingConfig(Config):
     """

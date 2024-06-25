@@ -2,8 +2,11 @@
 
 from flask import Flask
 from flask_cors import CORS
+from flask_sqlalchemy import SQLAlchemy
 
 cors = CORS()
+db = SQLAlchemy()
+
 
 
 def create_app(config_class="src.config.DevelopmentConfig") -> Flask:
@@ -14,7 +17,9 @@ def create_app(config_class="src.config.DevelopmentConfig") -> Flask:
     app = Flask(__name__)
     app.url_map.strict_slashes = False
 
-    app.config.from_object(config_class)
+    app.config.from_object(config_class) 
+
+    db.init_app(app) # Initialization of SQLAlchemy **
 
     register_extensions(app)
     register_routes(app)
@@ -26,6 +31,7 @@ def create_app(config_class="src.config.DevelopmentConfig") -> Flask:
 def register_extensions(app: Flask) -> None:
     """Register the extensions for the Flask app"""
     cors.init_app(app, resources={r"/api/*": {"origins": "*"}})
+    db.init_app(app)  # Ensure the SQLAlchemy extension is initialized
     # Further extensions can be added here
 
 
